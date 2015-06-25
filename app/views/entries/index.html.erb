@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-8">
+    <% if @entries.any? %>
+      <!-- <h3 class="text-primary">Entries (<%= @entries.count %>)</h3> -->
+      <h4 style="margin-left:60px"><%= link_to "New entry",new_entry_path %></h4>
+      <ol class="entries">
+        <%= render @entries %>
+      </ol>
+      <%= will_paginate @entries %>
+    <% end %>
+  </div>	
+</div>

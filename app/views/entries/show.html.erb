@@ -1,0 +1,41 @@
+
+<div class="row">
+  <aside class="col-md-8 entries">
+    <section >
+        <span class="title"><h4><strong ><%= link_to @entry.title,entry_path(@entry), {:class => 'text-success'} %></strong></h4></span>
+        <span class="body"><%= @entry.body %></span>
+        <span class="timestamp">
+    
+    Posted <%= time_ago_in_words(@entry.created_at) %> ago by
+    <%= link_to @entry.user.name, @entry.user %>
+  </span>
+    </section>
+
+    <% if @entry.comments.any? %>
+      <h4 style="margin-left:60px"><strong>Comments </strong>(<%= @entry.comments.count %>)</h4>
+      <ol class="comments">
+        <%= render @comments %>
+      </ol>
+      <span style="margin-left:60px"></span><%= will_paginate @comments %>
+    <% end %><hr>
+  </aside>
+</div>
+  <% if logged_in? %>
+
+  <%= form_for([@entry,@comment]) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="col-md-8">
+ 
+      <h4><%= f.label :content,:style=>'margin-left:30px' %></h><br>
+      <%= f.text_area :content,:size=>'2x7',:class=>"form-control",:style=>'margin-left:40px',:placeholder => 'Enter your comment.'%>
+    <div class="myButton">
+      <%= f.submit :class=> "btn btn-primary"%>
+    </div>
+    
+      
+    </div>
+    
+  <% end %>
+<% else %>
+  <%=link_to "Please login to comment!", login_path%>
+<% end %>
